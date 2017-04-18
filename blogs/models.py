@@ -1,13 +1,22 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
 class Blog(models.Model):
     name = models.CharField(max_length=100)
     tagline = models.TextField()
+    pub_time = models.DateTimeField(default=timezone.now(), blank=True)
 
     def __str__(self):
         return self.name
+
+    def was_xiaoming(self):
+        return self.name == 'xiaoming'
+
+    was_xiaoming.admin_order_field = "tagline"
+    was_xiaoming.boolean = False
+    was_xiaoming.short_description = "Published recently?"
 
 class Author(models.Model):
     name = models.CharField(max_length=50)

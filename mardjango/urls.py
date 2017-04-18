@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from polls.admin import admin_site
+
+admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include(admin_site.urls)),
     # url(r'^polls$', include('polls.urls'))
+    # url(r'^myadmin/', include(admin_site.urls)),
 ]
