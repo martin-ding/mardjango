@@ -21,6 +21,16 @@ class Blog(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
+    headshot = models.ImageField(upload_to='author_headshots')
+    last_accessed = models.DateTimeField()
+
+    def __str__(self):
+        return  self.name
+
+class Books(models.Model):
+    name = models.CharField(max_length=50)
+    pub_time = models.DateTimeField(default=timezone.now())
+    price = models.FloatField()
 
     def __str__(self):
         return  self.name
@@ -38,3 +48,4 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.headline
+

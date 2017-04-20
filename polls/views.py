@@ -1,38 +1,37 @@
-from django.http import Http404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.urls import reverse
+from django.core.urlresolvers import reverse
+from django.views import generic
 
-from .models import Question,Choice
-# Create your views here.
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    # template = loader.get_template('polls/index.html')
-    # return HttpResponse(template.render(context,request))
-    context = {
-        'latest_question_list' :latest_question_list
-    }
-    return render(request,'polls/index.html',context)
+from .models import Choice, Question
 
+'''
+类似地，ListView使用一个叫做<app name>/<model name>_list.html的默认模板
 
-def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, 'polls/detail.html', {'question': question})
+对于DetailView ，question变量会自动提供—— 因为我们使用Django 的模型 (Question)，
+Django 能够为context 变量决定一个合适的名字。然而对于ListView， 自动生成的context
+变量是question_list。为了覆盖这个行为，我们提供 context_object_name 属性，
+表示我们想使用latest_question_list。作为一种替换方案，你可以改变你的模板来
+匹配新的context变量 —— 但直接告诉Django使用你想要的变量会省事很多。
+'''
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
 
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+class DetailView(generic.DetailView):
+    model = Question
+    '默认情况下，通用视图DetailView 使用一个叫做' \
+    '<app name>/<model name>_detail.html的模板。' \
+    '在我们的例子中，它将使用 "polls/question_detail.html"模板。'
+    template_name = 'polls/detail.html'
 
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
-
-def hello_world(request):
-    return HttpResponse("contents")
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -41,7 +40,7 @@ def vote(request, question_id):
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
-            'question': question,
+            'question':      question,
             'error_message': "You didn't select a choice.",
         })
     else:
