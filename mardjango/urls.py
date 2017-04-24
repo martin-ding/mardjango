@@ -14,14 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.contrib.auth.views import login,logout
 from django.contrib import admin
-from polls.admin import admin_site
+# from polls.admin import admin_site
+from django.urls import reverse_lazy
+from django.views.generic import RedirectView
+from django.views.generic import TemplateView
 
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin_site.urls)),
-    url(r'^polls/', include('polls.urls')),
-    url(r'^blogs/', include('blogs.urls'))
-    # url(r'^myadmin/', include(admin_site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', TemplateView.as_view(template_name="base.html"), name='index'),
+    url(r'', include('django.contrib.auth.urls')),
 ]
