@@ -135,12 +135,13 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 #login
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = '/account/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 
 

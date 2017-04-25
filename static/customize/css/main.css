@@ -1,0 +1,26 @@
+footer {
+    background-color: #f8f8f8;
+    padding-top: 40px;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
+
+html,body{
+    height: 100%
+}
+
+footer{
+    width:100%;
+    position:fixed;
+    display: block;
+    text-align: center;
+    background-color: #2a2730;
+    bottom: 0px;
+    margin-top: 10%;
+}
+
+.login-panel{
+    margin-top: 10%
+}
