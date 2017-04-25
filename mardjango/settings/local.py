@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from django.core.mail import send_mail
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -138,5 +139,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
 
 #login
 ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_URL = '/login/'
+LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/'
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+# Host for sending e-mail.
+EMAIL_HOST = '127.0.0.1'
+
+# Port for sending e-mail.
+EMAIL_PORT = 1025
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False

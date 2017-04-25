@@ -26,5 +26,6 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', TemplateView.as_view(template_name="base.html"), name='index'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'', include('django.contrib.auth.urls')),
 ]
