@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^static/(?P<path>.*)$', serve, {
         'document_root': local.STATIC_ROOT,
     }),
+    url(r'orders', include('orders.urls')),
 ]

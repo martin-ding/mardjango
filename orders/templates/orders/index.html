@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% for order in orders.object_list %}
+  <p>{{ order.order_no }}</p>
+{% endfor %}
+{% block container %}
+    {% include 'navigation.html' %}
+    {% include 'orders/table_show.html' with orders=orders %}
+{% endblock %}
+
+<!-- 另一种分页显示方式 -->
+<p>
+{% if orders.has_previous %}
+  <a href="?page={{ orders.previous_page_number }}">Previous</a>
+  {% endif %}
+  {# orders.paginator.number_pages 返回总页数 #}
+  Page {{ orders.number }} of {{ orders.paginator.num_pages }}.
+{% if orders.has_next %}
+  <a href="?page={{ orders.next_page_number }}">Next</a>
+{% endif %}
+</p>
